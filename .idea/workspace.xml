@@ -4,14 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4d256f68-1943-435d-8a3e-960eb8036f02" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Data Preprocessing/data_preprocessing.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Data Preprocessing/item_dataset.xlsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Data Preprocessing/processed_item_dataset.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DataPreprocessing.py" beforeDir="false" />
-    </list>
+    <list default="true" id="4d256f68-1943-435d-8a3e-960eb8036f02" name="Changes" comment="First Commit - Data preprocessing process which involves processing the scraped data from Glassdoor. Unused columns is dropped. Only companies in Malaysia with reviews of over 10 data is kept. Besides that, the reviews are also processed for the next step which would be sentiment analysis" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -55,18 +48,18 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_ADD_EXTERNAL_FILES": "true",
-    "Python.DataPreprocessing.executor": "Run",
-    "Python.data_preprocessing.executor": "Run",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "master",
-    "last_opened_file_path": "C:/Users/ASUS/PycharmProjects/FinalYearProject/.venv",
-    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
+    &quot;Python.DataPreprocessing.executor&quot;: &quot;Run&quot;,
+    &quot;Python.data_preprocessing.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/ASUS/PycharmProjects/FinalYearProject/.venv&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\ASUS\PycharmProjects\FinalYearProject\.venv" />
@@ -91,6 +84,15 @@
       <option name="presentableId" value="Default" />
       <updated>1707558681182</updated>
     </task>
+    <task id="LOCAL-00001" summary="First Commit - Data preprocessing process which involves processing the scraped data from Glassdoor. Unused columns is dropped. Only companies in Malaysia with reviews of over 10 data is kept. Besides that, the reviews are also processed for the next step which would be sentiment analysis">
+      <option name="closed" value="true" />
+      <created>1707824466182</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1707824466182</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -106,5 +108,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+    <MESSAGE value="Initial commit" />
+    <MESSAGE value="First Commit - Data preprocessing process which involves processing the scraped data from Glassdoor. Unused columns is dropped. Only companies in Malaysia with reviews of over 10 data is kept. Besides that, the reviews are also processed for the next step which would be sentiment analysis" />
+    <option name="LAST_COMMIT_MESSAGE" value="First Commit - Data preprocessing process which involves processing the scraped data from Glassdoor. Unused columns is dropped. Only companies in Malaysia with reviews of over 10 data is kept. Besides that, the reviews are also processed for the next step which would be sentiment analysis" />
   </component>
 </project>
