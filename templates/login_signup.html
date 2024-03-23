@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link
+    href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css"
+    rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../static/login_signup.css">
+    <title>Login & Sign Up Page | IntelIntern</title>
+</head>
+<body>
+    <div class="container">
+        <div class="forms__container">
+            <div class="login__signup">
+                <form action="#" class="login__form">
+                    <h2 class="title">Login</h2>
+                    <div class="input__field">
+                        <i class="ri-user-fill"></i>
+                        <input type="text" placeholder="Username"/>
+                    </div>
+                    <div class="input__field">
+                        <i class="ri-lock-fill"></i>
+                        <input type="password" placeholder="Password"/>
+                    </div>
+                    <input type="submit" value="Login" class="btn solid"/>
+                    <p class="social__text"> Or login with social platforms</p>
+                    <div class="social__media">
+                        <a href="#" class="social__icon">
+                            <i class="ri-google-fill"></i>
+                        </a>
+                        <a href="#" class="social__icon">
+                            <i class="ri-linkedin-fill"></i>
+                        </a>
+                        <a href="#" class="social__icon">
+                            <i class="ri-facebook-fill"></i>
+                        </a>
+                    </div>
+                </form>
+                <form action="#" class="signup__form">
+                    <h2 class="title">Sign Up</h2>
+                    <div class="input__field">
+                        <i class="ri-user-fill"></i>
+                        <input type="text" placeholder="Username"/>
+                    </div>
+                    <div class="input__field">
+                        <i class="ri-mail-fill"></i>
+                        <input type="email" placeholder="Email"/>
+                    </div>
+                    <div class="input__field">
+                        <i class="ri-lock-fill"></i>
+                        <input type="password" placeholder="Password"/>
+                    </div>
+                    <div class="input__field">
+                        <i class="ri-key-fill"></i>
+                        <input type="password" placeholder="Confirm Password"/>
+                    </div>
+                    <input type="submit" value="Sign Up" class="btn"/>
+                    <p class="social__text"> Or sign up with social platforms</p>
+                    <div class="social__media">
+                        <a href="#" class="social__icon">
+                            <i class="ri-google-fill"></i>
+                        </a>
+                        <a href="#" class="social__icon">
+                            <i class="ri-linkedin-fill"></i>
+                        </a>
+                        <a href="#" class="social__icon">
+                            <i class="ri-facebook-fill"></i>
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="panels__container">
+            <div class="panel left__panel">
+                <div class="content">
+                    <h3>Just starting your journey?</h3>
+                    <p>
+                        Welcome to IntelIntern, your gateway to discovering exciting internship
+                        opportunities! Whether you're exploring options or ready to dive in,
+                        we're here to help. Sign up now and begin your internship journey with us!
+                    </p>
+                    <button class="btn transparent" id="signup__btn">
+                        Sign Up
+                    </button>
+                </div>
+                <img src="../static/assets/login.svg" class="image" alt="" />
+            </div>
+            <div class="panel right__panel">
+                <div class="content">
+                    <h3>Continuing your journey?</h3>
+                    <p>
+                        Welcome back to IntelIntern! Login to discover tailored internship
+                        recommendations, connect with top companies and take the next step in
+                        your professional growth. Let's continue exploring opportunities together!
+                    </p>
+                    <button class="btn transparent" id="login__btn">
+                        Login
+                    </button>
+                </div>
+                <img src="../static/assets/signup.svg" class="image" alt="" />
+            </div>
+        </div>
+    </div>
+    <script src="../static/scripts/login_signup.js"></script>
+</body>
+</html>

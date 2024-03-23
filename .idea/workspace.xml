@@ -4,9 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4d256f68-1943-435d-8a3e-960eb8036f02" name="Changes" comment="Fifth Commit - Started designing user interface of the system using Flask. Had to change from using Django as it is only usable for Pycharm Professional.">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="4d256f68-1943-435d-8a3e-960eb8036f02" name="Changes" comment="Seventh Commit - Continued with the design of the landing page.">
+      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/assets/login.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/assets/signup.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/login_signup.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/scripts/login_signup.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/login_signup.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/landing.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/landing.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -16,8 +23,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Python Script" />
         <option value="HTML File" />
+        <option value="Python Script" />
       </list>
     </option>
   </component>
@@ -34,8 +41,8 @@
   <component name="GithubPullRequestsUISettings">
     <option name="selectedUrlAndAccountId">
       <UrlAndAccount>
-        <option name="accountId" value="dc53b4e5-4db4-4370-bcfb-da8a87c5dfd8" />
-        <option name="url" value="https://github.com/DanishSuffian/FinalYearProject.git" />
+        <option name="accountId" value="09269a67-7303-45b4-a707-46d45d4cb6f0" />
+        <option name="url" value="https://github.com/DanishSuffian/FinalYearProject" />
       </UrlAndAccount>
     </option>
   </component>
@@ -65,8 +72,8 @@
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/ASUS/PycharmProjects/FinalYearProject/assets&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;configurable.group.project&quot;
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/LENOVO/FinalYearProject&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;org.jetbrains.plugins.github.ui.GithubSettingsConfigurable&quot;
   }
 }</component>
   <component name="RecentsManager">
@@ -75,16 +82,17 @@
       <recent name="C:\Users\ASUS\PycharmProjects\FinalYearProject\.venv" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\ASUS\PycharmProjects\FinalYearProject\static\scripts" />
-      <recent name="C:\Users\ASUS\PycharmProjects\FinalYearProject\static" />
-      <recent name="C:\Users\ASUS\PycharmProjects\FinalYearProject" />
-      <recent name="C:\Users\ASUS\PycharmProjects\FinalYearProject\assets" />
+      <recent name="C:\Users\LENOVO\FinalYearProject\static\assets" />
+      <recent name="C:\Users\LENOVO\FinalYearProject\static\scripts" />
+      <recent name="C:\Users\LENOVO\FinalYearProject\static" />
+      <recent name="C:\Users\LENOVO\FinalYearProject\templates" />
+      <recent name="C:\Users\LENOVO\FinalYearProject\credentials" />
     </key>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-python-sdk-7a29c1521ef0-d3b881c8e49f-com.jetbrains.pycharm.community.sharedIndexes.bundled-PC-233.11799.298" />
+        <option value="bundled-python-sdk-d68999036c7f-d3b881c8e49f-com.jetbrains.pycharm.community.sharedIndexes.bundled-PC-233.14475.56" />
       </set>
     </attachedChunks>
   </component>
@@ -137,7 +145,15 @@
       <option name="project" value="LOCAL" />
       <updated>1710826067335</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Seventh Commit - Continued with the design of the landing page.">
+      <option name="closed" value="true" />
+      <created>1711111961938</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1711111961938</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -158,6 +174,7 @@
     <MESSAGE value="Third Commit - Updated the 'job_type' and 'job scope' column to better match the companies demographic. This helps in increasing the accuracy of the model when calculating the similarity scores between the companies." />
     <MESSAGE value="Fourth Commit - Calculated the similarity score between each items and saved it into a separate .csv file named &quot;item_similarity_score.csv&quot;" />
     <MESSAGE value="Fifth Commit - Started designing user interface of the system using Flask. Had to change from using Django as it is only usable for Pycharm Professional." />
-    <option name="LAST_COMMIT_MESSAGE" value="Fifth Commit - Started designing user interface of the system using Flask. Had to change from using Django as it is only usable for Pycharm Professional." />
+    <MESSAGE value="Seventh Commit - Continued with the design of the landing page." />
+    <option name="LAST_COMMIT_MESSAGE" value="Seventh Commit - Continued with the design of the landing page." />
   </component>
 </project>
