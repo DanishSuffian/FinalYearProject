@@ -1,11 +1,38 @@
-const login__btn = document.querySelector("#login__btn");
-const signup__btn = document.querySelector("#signup__btn");
-const container = document.querySelector(".container");
+document.getElementById('signup_form').addEventListener('submit', function(event) {
+    event.preventDefault();
 
-signup__btn.addEventListener("click", () => {
-    container.classList.add("signup__mode");
+    var formData = new FormData(this);
+
+    fetch('/signup', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => {
+        if (response.ok) {
+            return response.text();
+        } else {
+            throw new Error('Network response was not ok');
+        }
+    })
+    .then(data => {
+        if (data.includes('This email is already used')) {
+            iziToast.error({
+                title: 'Error',
+                message: 'This email is already used',
+                position: 'topRight',
+                theme: 'bootstrap',
+                messageClass: 'iziToast-message',
+                titleClass: 'iziToast-title'
+            });
+        } else {
+            window.location.href = '/dashboard';
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
 });
 
-login__btn.addEventListener("click", () => {
-    container.classList.remove("signup__mode");
+document.getElementsByClassName('close')[0].addEventListener('click', function() {
+    document.getElementById('errorModal').style.display = 'none';
 });

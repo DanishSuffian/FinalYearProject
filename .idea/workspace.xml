@@ -4,16 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4d256f68-1943-435d-8a3e-960eb8036f02" name="Changes" comment="Seventh Commit - Continued with the design of the landing page.">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/assets/login.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/assets/signup.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/login_signup.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/scripts/login_signup.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/login_signup.html" afterDir="false" />
+    <list default="true" id="4d256f68-1943-435d-8a3e-960eb8036f02" name="Changes" comment="Eighth Commit - Continued with the design of the login and sign up page.">
+      <change afterPath="$PROJECT_DIR$/static/scripts/login_signup_animate.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/dashboard.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/landing.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/landing.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/landing.css" beforeDir="false" afterPath="$PROJECT_DIR$/static/landing.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/login_signup.css" beforeDir="false" afterPath="$PROJECT_DIR$/static/login_signup.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/scripts/login_signup.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/scripts/login_signup.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/login_signup.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/login_signup.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -23,8 +22,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="HTML File" />
         <option value="Python Script" />
+        <option value="HTML File" />
       </list>
     </option>
   </component>
@@ -60,24 +59,26 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
-    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
-    &quot;Python.DataPreprocessing.executor&quot;: &quot;Run&quot;,
-    &quot;Python.content_based_filtering.executor&quot;: &quot;Run&quot;,
-    &quot;Python.data_preprocessing.executor&quot;: &quot;Run&quot;,
-    &quot;Python.sentiment_analysis.executor&quot;: &quot;Run&quot;,
-    &quot;Python.similarity_score.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/LENOVO/FinalYearProject&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;org.jetbrains.plugins.github.ui.GithubSettingsConfigurable&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "DefaultHtmlFileTemplate": "HTML File",
+    "Python.DataPreprocessing.executor": "Run",
+    "Python.app.executor": "Run",
+    "Python.content_based_filtering.executor": "Run",
+    "Python.data_preprocessing.executor": "Run",
+    "Python.sentiment_analysis.executor": "Run",
+    "Python.similarity_score.executor": "Run",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "master",
+    "last_opened_file_path": "C:/Users/ASUS/PycharmProjects/FinalYearProject/credentials",
+    "settings.editor.selected.configurable": "org.jetbrains.plugins.github.ui.GithubSettingsConfigurable"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\ASUS\PycharmProjects\FinalYearProject\credentials" />
       <recent name="C:\Users\ASUS\PycharmProjects\FinalYearProject\assets" />
       <recent name="C:\Users\ASUS\PycharmProjects\FinalYearProject\.venv" />
     </key>
@@ -92,7 +93,7 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-python-sdk-d68999036c7f-d3b881c8e49f-com.jetbrains.pycharm.community.sharedIndexes.bundled-PC-233.14475.56" />
+        <option value="bundled-python-sdk-7a29c1521ef0-d3b881c8e49f-com.jetbrains.pycharm.community.sharedIndexes.bundled-PC-233.11799.298" />
       </set>
     </attachedChunks>
   </component>

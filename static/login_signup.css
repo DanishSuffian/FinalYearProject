@@ -250,6 +250,78 @@ form.signup__form {
     transform: translateX(800px);
 }
 
+.footer {
+    background-color: var(--primary-color);
+}
+
+.footer__container {
+    display: grid;
+    gap: 4rem 2rem;
+}
+
+.footer__col:first-child {
+    max-width: 300px;
+}
+
+.footer__logo {
+    margin-bottom: 1rem;
+}
+
+.footer__col p {
+    color: var(--text-light);
+}
+
+.footer__col h4 {
+    margin-bottom: 1rem;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--secondary-color);
+}
+
+.footer__links {
+    list-style: none;
+    display: grid;
+    gap: 1rem;
+}
+
+.footer__links a {
+    color: var(--text-light);
+}
+
+.footer__links a:hover {
+    color: var(--secondary-color);
+}
+
+.footer__bar {
+    padding: 1rem;
+    font-size: 0.9rem;
+    color: var(--text-light);
+    text-align: center;
+}
+
+.section__container {
+    max-width: var(--max-width);
+    margin: auto;
+    padding: 5rem 1rem;
+}
+
+.logo a {
+    font-size: 1.5rem;
+    font-weight: 600;
+    font-family: var(--header-font);
+    color: var(--white);
+}
+
+a {
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+.iziToast-message,
+.iziToast-title {
+    font-family: 'Poppins', sans-serif;
+}
+
 /*Animation*/
 
 .container.signup__mode:before {
@@ -417,4 +489,10 @@ form.signup__form {
     bottom: 28%;
     left: 50%;
   }
+}
+
+@media (width > 768px) {
+    .footer__container {
+        grid-template-columns: 2fr 1fr 1fr;
+    }
 }
