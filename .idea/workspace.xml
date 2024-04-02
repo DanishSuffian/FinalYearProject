@@ -4,14 +4,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4d256f68-1943-435d-8a3e-960eb8036f02" name="Changes" comment="Eighth Commit - Continued with the design of the login and sign up page.">
-      <change afterPath="$PROJECT_DIR$/static/scripts/login_signup_animate.js" afterDir="false" />
+    <list default="true" id="4d256f68-1943-435d-8a3e-960eb8036f02" name="Changes" comment="Ninth Commit - Connected the pages with Firebase by Google. A few errors encountered as I just understand how Flask routes work. It plays an important role in the whole process of redirecting the data. Just a few more touch ups to finish the login and signup page which includes error handling.">
       <change afterPath="$PROJECT_DIR$/templates/dashboard.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/static/landing.css" beforeDir="false" afterPath="$PROJECT_DIR$/static/landing.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/static/login_signup.css" beforeDir="false" afterPath="$PROJECT_DIR$/static/login_signup.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/scripts/landing.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/scripts/landing.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/static/scripts/login_signup.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/scripts/login_signup.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/scripts/login_signup_animate.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/scripts/login_signup_animate.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/landing.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/landing.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/login_signup.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/login_signup.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -22,8 +25,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Python Script" />
         <option value="HTML File" />
+        <option value="Python Script" />
       </list>
     </option>
   </component>
@@ -69,6 +72,7 @@
     "Python.data_preprocessing.executor": "Run",
     "Python.sentiment_analysis.executor": "Run",
     "Python.similarity_score.executor": "Run",
+    "Python.test.executor": "Run",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "git-widget-placeholder": "master",
@@ -154,7 +158,15 @@
       <option name="project" value="LOCAL" />
       <updated>1711111961938</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Ninth Commit - Connected the pages with Firebase by Google. A few errors encountered as I just understand how Flask routes work. It plays an important role in the whole process of redirecting the data. Just a few more touch ups to finish the login and signup page which includes error handling.">
+      <option name="closed" value="true" />
+      <created>1711527525255</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1711527525255</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -176,6 +188,7 @@
     <MESSAGE value="Fourth Commit - Calculated the similarity score between each items and saved it into a separate .csv file named &quot;item_similarity_score.csv&quot;" />
     <MESSAGE value="Fifth Commit - Started designing user interface of the system using Flask. Had to change from using Django as it is only usable for Pycharm Professional." />
     <MESSAGE value="Seventh Commit - Continued with the design of the landing page." />
-    <option name="LAST_COMMIT_MESSAGE" value="Seventh Commit - Continued with the design of the landing page." />
+    <MESSAGE value="Ninth Commit - Connected the pages with Firebase by Google. A few errors encountered as I just understand how Flask routes work. It plays an important role in the whole process of redirecting the data. Just a few more touch ups to finish the login and signup page which includes error handling." />
+    <option name="LAST_COMMIT_MESSAGE" value="Ninth Commit - Connected the pages with Firebase by Google. A few errors encountered as I just understand how Flask routes work. It plays an important role in the whole process of redirecting the data. Just a few more touch ups to finish the login and signup page which includes error handling." />
   </component>
 </project>

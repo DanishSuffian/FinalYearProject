@@ -380,6 +380,10 @@ nav {
         background-color: transparent;
     }
 
+    .nav__links li:last-child {
+        display: none;
+    }
+
     .nav__menu__btn {
         display: none;
     }

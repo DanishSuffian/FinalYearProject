@@ -25,6 +25,10 @@ navLinks.addEventListener("click", (e) => {
     menuBtnIcon.setAttribute("class", "ri-menu-line");
 });
 
+function redirectToLoginSignup() {
+    window.location.href = '/signup';
+}
+
 const scrollRevealOption = {
     distance: "50px",
     origin: "bottom",

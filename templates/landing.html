@@ -15,18 +15,19 @@
         <nav>
             <div class="nav__bar">
                 <div class="logo nav__logo">
-                    <a href="#">IntelIntern</a>
+                    <a href="/">IntelIntern</a>
                 </div>
                 <ul class="nav__links" id="nav-links">
                     <li><a href="#about">About Us</a></li>
                     <li><a href="#glassdoor">Glassdoor</a></li>
                     <li><a href="#companies">Companies</a></li>
+                    <li><a onclick="redirectToLoginSignup()">Account</a></li>
                 </ul>
                 <div class="nav__menu__btn" id="menu-btn">
                     <i class="ri-menu-line"></i>
                 </div>
                 <div class="nav__action__btn">
-                    <button class="btn">
+                    <button class="btn" onclick="redirectToLoginSignup()">
                         <span><i class="ri-user-line"></i></span> Account
                     </button>
                 </div>
@@ -68,7 +69,7 @@
                     recommendations.
                 </p>
                 <div class="about__btn">
-                    <a href="#">
+                    <a onclick="redirectToLoginSignup()">
                         Create Your Account
                         <span><i class="ri-arrow-right-line"></i></span>
                     </a>
@@ -120,7 +121,7 @@
         <div class="section__container footer__container">
             <div class="footer__col">
                 <div class="logo footer__logo">
-                    <a href="#">IntelIntern</a>
+                    <a href="/">IntelIntern</a>
                 </div>
                 <p>
                     Embark on your internship journey & discover new opportunities!
