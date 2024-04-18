@@ -5,17 +5,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4d256f68-1943-435d-8a3e-960eb8036f02" name="Changes" comment="Ninth Commit - Connected the pages with Firebase by Google. A few errors encountered as I just understand how Flask routes work. It plays an important role in the whole process of redirecting the data. Just a few more touch ups to finish the login and signup page which includes error handling.">
-      <change afterPath="$PROJECT_DIR$/templates/dashboard.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/recommender/collaborative_filtering.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/recommender/interaction_simulation.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/recommender/user_interaction_dataset.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/recommender/user_item_matrix.csv" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/landing.css" beforeDir="false" afterPath="$PROJECT_DIR$/static/landing.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/login_signup.css" beforeDir="false" afterPath="$PROJECT_DIR$/static/login_signup.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/scripts/landing.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/scripts/landing.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/scripts/login_signup.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/scripts/login_signup.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/scripts/login_signup_animate.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/scripts/login_signup_animate.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/landing.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/landing.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/login_signup.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/login_signup.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/recommender/data_preprocessing.py" beforeDir="false" afterPath="$PROJECT_DIR$/recommender/data_preprocessing.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/recommender/processed_item_dataset.csv" beforeDir="false" afterPath="$PROJECT_DIR$/recommender/item_processed_dataset.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/recommender/sentiment_analysis.py" beforeDir="false" afterPath="$PROJECT_DIR$/recommender/sentiment_analysis.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/recommender/sentiment_item_dataset.csv" beforeDir="false" afterPath="$PROJECT_DIR$/recommender/item_sentiment_dataset.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/recommender/similarity_score.py" beforeDir="false" afterPath="$PROJECT_DIR$/recommender/similarity_score.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -43,8 +42,8 @@
   <component name="GithubPullRequestsUISettings">
     <option name="selectedUrlAndAccountId">
       <UrlAndAccount>
-        <option name="accountId" value="09269a67-7303-45b4-a707-46d45d4cb6f0" />
-        <option name="url" value="https://github.com/DanishSuffian/FinalYearProject" />
+        <option name="accountId" value="dc53b4e5-4db4-4370-bcfb-da8a87c5dfd8" />
+        <option name="url" value="https://github.com/DanishSuffian/FinalYearProject.git" />
       </UrlAndAccount>
     </option>
   </component>
@@ -68,10 +67,13 @@
     "DefaultHtmlFileTemplate": "HTML File",
     "Python.DataPreprocessing.executor": "Run",
     "Python.app.executor": "Run",
+    "Python.collaborative_filtering.executor": "Run",
     "Python.content_based_filtering.executor": "Run",
     "Python.data_preprocessing.executor": "Run",
+    "Python.interaction_simulation.executor": "Run",
     "Python.sentiment_analysis.executor": "Run",
     "Python.similarity_score.executor": "Run",
+    "Python.simulate_user_behaviour.executor": "Run",
     "Python.test.executor": "Run",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
@@ -166,7 +168,15 @@
       <option name="project" value="LOCAL" />
       <updated>1711527525255</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="Ninth Commit - Connected the pages with Firebase by Google. A few errors encountered as I just understand how Flask routes work. It plays an important role in the whole process of redirecting the data. Just a few more touch ups to finish the login and signup page which includes error handling.">
+      <option name="closed" value="true" />
+      <created>1712054838336</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1712054838336</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">

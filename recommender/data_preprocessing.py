@@ -69,4 +69,4 @@ df_filtered['review_text'] = df_filtered['job_pros'] + " " + df_filtered['job_co
 df_filtered['preprocessed_review_text'] = df_filtered['review_text'].apply(preprocess_text)
 
 # Save the processed DataFrame to a CSV file
-df_filtered.to_csv("processed_item_dataset.csv", index=False)
+df_filtered.to_csv("item_processed_dataset.csv", index=False)

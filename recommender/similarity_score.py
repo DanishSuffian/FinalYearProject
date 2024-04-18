@@ -26,7 +26,7 @@ def preprocess_text(text):
 
 
 # Load the dataset into a pandas DataFrame
-df = pd.read_csv('sentiment_item_dataset.csv')
+df = pd.read_csv('item_sentiment_dataset.csv')
 
 # Combine relevant text columns such as 'job_company', 'job_location', 'job_type' and 'job_scope'
 # into a single text column for each item named 'combined_text'

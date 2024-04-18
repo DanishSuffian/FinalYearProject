@@ -62,7 +62,7 @@ def flair_sentiment_analysis(text):
 
 
 # Load the dataset into a pandas DataFrame
-df = pd.read_csv("processed_item_dataset.csv")
+df = pd.read_csv("item_processed_dataset.csv")
 
 # Apply sentiment analysis
 df['textblob_sentiment'] = df['review_text'].apply(textblob_sentiment_analysis)
@@ -79,4 +79,4 @@ average_sentiment_by_company = df.groupby('job_company')['average_sentiment'].me
 df = df.merge(average_sentiment_by_company, on='job_company', how='left', suffixes=('', '_avg_company'))
 
 # Save the DataFrame to a CSV file
-df.to_csv("sentiment_item_dataset.csv", index=False)
+df.to_csv("item_sentiment_dataset.csv", index=False)
