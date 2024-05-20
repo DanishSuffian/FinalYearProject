@@ -6,6 +6,16 @@ import spacy
 from nltk.corpus import stopwords
 import string
 
+
+def get_user_ids(user_id_list):
+    all_user_ids = []
+
+    for user_id in user_id_list:
+        all_user_ids.append(user_id)
+
+    return all_user_ids
+
+
 # Initialize spaCy and NLTK stopwords
 nlp = spacy.load("en_core_web_sm")
 stop_words = set(stopwords.words('english'))
@@ -40,7 +50,7 @@ df['combined_text'] = df['combined_text'].fillna('')
 df['combined_text'] = df['combined_text'].apply(preprocess_text)
 
 # Group by company before calculating the similarity score
-grouped_df = df.groupby('job_company')['combined_text'].apply(lambda x: ' '.join(x)).reset_index()
+grouped_df = df.groupby('job_company').agg({'item_id': 'first', 'combined_text': lambda x: ' '.join(x)}).reset_index()
 
 # Initialize TF-IDF vectorizer and fit-transform the text within each group
 tfidf_vectorizer = TfidfVectorizer(stop_words='english')
@@ -54,8 +64,14 @@ tfidf_matrix_svd = svd.fit_transform(tfidf_matrix)
 # Compute cosine similarity matrix within each group
 cosine_sim_matrix = cosine_similarity(tfidf_matrix_svd, tfidf_matrix_svd)
 
+# Group by company and collect user IDs
+grouped_df = df.groupby('job_company').agg({
+    'item_id': 'first',
+    'user_id': get_user_ids
+}).reset_index()
+
 # Append the similarity score to the grouped DataFrame
 grouped_df['similarity_score'] = cosine_sim_matrix.tolist()
 
 # Save the DataFrame to a new CSV file with the similarity score
-grouped_df.to_csv('item_similarity_score.csv', index=False)
+grouped_df.to_csv('item_similarity_score4.csv', index=False)

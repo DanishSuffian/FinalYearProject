@@ -2,6 +2,8 @@ import pyrebase
 import json
 import re
 import secrets
+import pickle
+import pandas as pd
 from flask import Flask, render_template, request, session
 from datetime import datetime
 from firebase_admin import auth
@@ -21,6 +23,17 @@ config = {
 firebase = pyrebase.initialize_app(config)
 auth = firebase.auth()
 db = firebase.database()
+
+similarity_scores_ref = db.child('similarity_score').get()
+similarity_scores = {item.key(): item.val() for item in similarity_scores_ref.each()}
+
+similarity_df = pd.DataFrame.from_dict(similarity_scores, orient='index')
+
+bucket = firebase.storage().bucket()
+cf_model_blob = bucket.blob('cf_model.pkl')
+cf_model_blob.download_to_filename('cf_model.pkl')
+with open('cf_model.pkl', 'rb') as model_file:
+    cf_model = pickle.load(model_file)
 
 app = Flask(__name__)
 app.secret_key = secrets.token_hex(16)
