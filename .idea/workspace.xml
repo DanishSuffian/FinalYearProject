@@ -5,20 +5,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4d256f68-1943-435d-8a3e-960eb8036f02" name="Changes" comment="Ninth Commit - Connected the pages with Firebase by Google. A few errors encountered as I just understand how Flask routes work. It plays an important role in the whole process of redirecting the data. Just a few more touch ups to finish the login and signup page which includes error handling.">
-      <change afterPath="$PROJECT_DIR$/recommender/cf_model.pkl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/recommender/test_cbf.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/recommender/test_cf.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/recommender/test_hybrid.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.name" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.name" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/recommendations.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/recommender/interaction_simulation.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/recommender/item_sentiment_dataset.csv" beforeDir="false" afterPath="$PROJECT_DIR$/recommender/item_sentiment_dataset.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/recommender/item_similarity_score.csv" beforeDir="false" afterPath="$PROJECT_DIR$/recommender/item_similarity_score.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/recommender/similarity_score.py" beforeDir="false" afterPath="$PROJECT_DIR$/recommender/similarity_score.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/recommender/user_interaction_dataset.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/recommender/user_item_matrix.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/recommender/cf_model.pkl" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/recommender/item_similarity_score.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/recommender/similarity_score.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/recommender/test_cbf.py" beforeDir="false" afterPath="$PROJECT_DIR$/recommender/test_cbf.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/recommender/test_cf.py" beforeDir="false" afterPath="$PROJECT_DIR$/recommender/test_cf.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/recommender/test_hybrid.py" beforeDir="false" afterPath="$PROJECT_DIR$/recommender/test_hybrid.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/dashboard.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/dashboard.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -68,31 +64,33 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
-    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
-    &quot;Python.DataPreprocessing.executor&quot;: &quot;Run&quot;,
-    &quot;Python.app.executor&quot;: &quot;Run&quot;,
-    &quot;Python.cbf_cnn.executor&quot;: &quot;Run&quot;,
-    &quot;Python.collaborative_filtering.executor&quot;: &quot;Run&quot;,
-    &quot;Python.content_based_filtering.executor&quot;: &quot;Run&quot;,
-    &quot;Python.data_preprocessing.executor&quot;: &quot;Run&quot;,
-    &quot;Python.interaction_simulation.executor&quot;: &quot;Run&quot;,
-    &quot;Python.sentiment_analysis.executor&quot;: &quot;Run&quot;,
-    &quot;Python.similarity_score.executor&quot;: &quot;Run&quot;,
-    &quot;Python.simulate_user_behaviour.executor&quot;: &quot;Run&quot;,
-    &quot;Python.test.executor&quot;: &quot;Run&quot;,
-    &quot;Python.test_cbf.executor&quot;: &quot;Run&quot;,
-    &quot;Python.test_cf.executor&quot;: &quot;Run&quot;,
-    &quot;Python.test_hybrid.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/ASUS/PycharmProjects/FinalYearProject/credentials&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "DefaultHtmlFileTemplate": "HTML File",
+    "Python.DataPreprocessing.executor": "Run",
+    "Python.app.executor": "Run",
+    "Python.cbf_cnn.executor": "Run",
+    "Python.collaborative_filtering.executor": "Run",
+    "Python.content_based_filtering.executor": "Run",
+    "Python.data_preprocessing.executor": "Run",
+    "Python.interaction_simulation.executor": "Run",
+    "Python.sentiment_analysis.executor": "Run",
+    "Python.similarity_score.executor": "Run",
+    "Python.simulate_user_behaviour.executor": "Run",
+    "Python.test.executor": "Run",
+    "Python.test2.executor": "Run",
+    "Python.test3.executor": "Run",
+    "Python.test_cbf.executor": "Run",
+    "Python.test_cf.executor": "Run",
+    "Python.test_hybrid.executor": "Run",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "master",
+    "last_opened_file_path": "C:/Users/ASUS/PycharmProjects/FinalYearProject/credentials",
+    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\ASUS\PycharmProjects\FinalYearProject\credentials" />

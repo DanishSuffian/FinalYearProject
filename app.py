@@ -1,43 +1,144 @@
-import pyrebase
 import json
 import re
 import secrets
-import pickle
+
 import pandas as pd
-from flask import Flask, render_template, request, session
-from datetime import datetime
-from firebase_admin import auth
-
-config = {
-    'apiKey': "AIzaSyB5ZeLFAn2cshEwqsgq6vS3-6MmgdfxgLY",
-    'authDomain': "intelintern-f0863.firebaseapp.com",
-    'databaseURL': "https://intelintern-f0863-default-rtdb.asia-southeast1.firebasedatabase.app",
-    'projectId': "intelintern-f0863",
-    'storageBucket': "intelintern-f0863.appspot.com",
-    'messagingSenderId': "299592989079",
-    'appId': "1:299592989079:web:4a6b5729f3c06c5614ecd2",
-    'measurementId': "G-HVC5YL8FYV",
-    'serviceAccountKey': "credentials/intelintern-f0863-firebase-adminsdk-409yu-21159de1d1.json"
-}
-
-firebase = pyrebase.initialize_app(config)
-auth = firebase.auth()
-db = firebase.database()
-
-similarity_scores_ref = db.child('similarity_score').get()
-similarity_scores = {item.key(): item.val() for item in similarity_scores_ref.each()}
-
-similarity_df = pd.DataFrame.from_dict(similarity_scores, orient='index')
-
-bucket = firebase.storage().bucket()
-cf_model_blob = bucket.blob('cf_model.pkl')
-cf_model_blob.download_to_filename('cf_model.pkl')
-with open('cf_model.pkl', 'rb') as model_file:
-    cf_model = pickle.load(model_file)
+from flask import Flask, render_template, request, session, jsonify
+import mysql.connector
+from mysql.connector import Error
+from sklearn.decomposition import TruncatedSVD
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.metrics.pairwise import cosine_similarity
+from nltk.corpus import stopwords
+import string
+import spacy
+from surprise import SVD, Reader, Dataset
 
 app = Flask(__name__)
+
+db_config = {
+    'host': 'localhost',
+    'user': 'root',
+    'password': 'password',
+    'database': 'intelintern',
+    'port': 3306
+}
+
 app.secret_key = secrets.token_hex(16)
 
+nlp = spacy.load("en_core_web_sm")
+stop_words = set(stopwords.words('english'))
+punctuation = set(string.punctuation)
+
+
+def get_db_connection():
+    try:
+        connection = mysql.connector.connect(**db_config)
+        if connection.is_connected():
+            return connection
+    except Error as e:
+        print(f"Error: {e}")
+        return None
+
+
+# Function to preprocess text
+def preprocess_text(text):
+    doc = nlp(text)
+    processed_text = []
+
+    for token in doc:
+        if token.pos_ != "STOP" and token.text.lower() not in stop_words and token.text.lower() not in punctuation:
+            processed_text.append(token.text.lower())
+
+    processed_text = " ".join(processed_text)
+    return processed_text
+
+
+connection = get_db_connection()
+if connection:
+    try:
+        query_users = "SELECT * FROM users"
+        users = pd.read_sql(query_users, connection)
+        query_companies = "SELECT * FROM companies"
+        companies = pd.read_sql(query_companies, connection)
+        query_interactions = "SELECT * FROM interactions "
+        interactions = pd.read_sql(query_interactions, connection)
+    except mysql.connector.Error as e:
+        print(f"Error reading data from MySQL: {e}")
+    finally:
+        connection.close()
+
+companies['content'] = companies['company_name'] + ' ' + companies['company_location'] + ' ' + companies['company_type'] + ' ' + companies['company_scope']
+companies['content'] = companies['content'].fillna('')
+companies['content'] = companies['content'].apply(preprocess_text)
+
+tfidf_vectorizer = TfidfVectorizer(stop_words='english')
+tfidf_matrix = tfidf_vectorizer.fit_transform(companies['content'])
+
+svd = TruncatedSVD(n_components=10)
+tfidf_svd = svd.fit_transform(tfidf_matrix)
+
+
+def normalize_sentiment(score):
+    x_min = -2
+    x_max = 2
+    y_min = 1
+    y_max = 5
+    return ((score - x_min) / (x_max - x_min)) * (y_max - y_min) + y_min
+
+
+interactions['sentiment_score'] = interactions['sentiment_score'].apply(normalize_sentiment)
+
+reader = Reader(rating_scale=(1, 5))
+
+data = Dataset.load_from_df(interactions[['user_id', 'company_id', 'sentiment_score']], reader)
+
+# Split the data into training and testing sets
+trainset = data.build_full_trainset()
+
+# Initialize the SVD algorithm and fit it to the training set
+algo = SVD()
+algo.fit(trainset)
+
+features_to_match = ['company_location', 'company_scope', 'company_type']
+
+
+def get_hybrid_recommendations(user_id, num_recommendations=10):
+    user_interactions = interactions[interactions['user_id'] == user_id]
+    if user_interactions.empty:
+        return [], [], [], 0, [], []
+
+    last_company_id = user_interactions['company_id'].iloc[-1]
+    company_index = companies[companies['company_id'] == last_company_id].index[0]
+    company_vector = tfidf_svd[company_index].reshape(1, -1)
+    similarity_scores = cosine_similarity(company_vector, tfidf_svd)[0]
+
+    cbf_recommendations = sorted(list(enumerate(similarity_scores)), key=lambda x: x[1], reverse=True)[1:num_recommendations+1]
+    cbf_recommendations = [(companies.iloc[i[0]]['company_id'], i[1]) for i in cbf_recommendations]
+
+    all_company_ids = companies['company_id'].tolist()
+    cf_recommendations = [(company_id, algo.predict(user_id, company_id).est) for company_id in all_company_ids]
+    cf_recommendations = sorted(cf_recommendations, key=lambda x: x[1], reverse=True)[:num_recommendations]
+
+    max_cbf_score = max(cbf_recommendations, key=lambda x: x[1])[1]
+    max_cf_score = max(cf_recommendations, key=lambda x: x[1])[1]
+    min_cbf_score = min(cbf_recommendations, key=lambda x: x[1])[1]
+    min_cf_score = min(cf_recommendations, key=lambda x: x[1])[1]
+
+    cbf_recommendations = [(company_id, (score - min_cbf_score) / (max_cbf_score - min_cbf_score)) for company_id, score in cbf_recommendations]
+    cf_recommendations = [(company_id, (score - min_cf_score) / (max_cf_score - min_cf_score)) for company_id, score in cf_recommendations]
+
+    weighted_hybrid_recommendations = {}
+    for company_id, cbf_score in cbf_recommendations:
+        weighted_hybrid_recommendations[company_id] = weighted_hybrid_recommendations.get(company_id, 0) + 0.7 * cbf_score
+
+    for company_id, cf_score in cf_recommendations:
+        weighted_hybrid_recommendations[company_id] = weighted_hybrid_recommendations.get(company_id, 0) + 0.3 * cf_score
+
+    weighted_hybrid_recommendations = sorted(weighted_hybrid_recommendations.items(), key=lambda x: x[1], reverse=True)
+    weighted_hybrid_recommendations = [rec[0] for rec in weighted_hybrid_recommendations]
+
+    return weighted_hybrid_recommendations[:num_recommendations], cbf_recommendations[:num_recommendations], cf_recommendations[:num_recommendations]
 
 @app.route('/')
 def index():
@@ -49,78 +150,106 @@ def login():
     username = request.form['username']
     password = request.form['password']
 
-    user_query = db.child('users').order_by_child('username').equal_to(username).get()
-    if not user_query.each():
-        return json.dumps({'error': 'Incorrect username or password'})
+    connection = get_db_connection()
+    if not connection:
+        return json.dumps({'error': 'Database connection failed'})
 
-    user_data = user_query.each()[0].val()
+    cursor = connection.cursor(dictionary=True)
+    cursor.execute("SELECT * FROM users WHERE username = %s AND password = %s", (username, password))
+    user = cursor.fetchone()
+    cursor.close()
+    connection.close()
 
-    try:
-        email = user_data['email']
-
-        user = auth.sign_in_with_email_and_password(email, password)
-        user_info = auth.get_account_info(user['idToken'])
-
-        if user_info['users'][0]['emailVerified']:
-            session['user'] = email
+    if user:
+        if user:
+            session['user_id'] = user['user_id']
             return json.dumps({'message': 'Login successful'})
-        else:
-            return json.dumps({'error': 'Email is not verified'})
-    except Exception as e:
-        print("Error:", e)
+    else:
         return json.dumps({'error': 'Incorrect username or password'})
 
 
-@app.route('/signup', methods=['GET', 'POST'])
+@app.route('/signup', methods=['GET'])
+def show_signup_form():
+    return render_template('login_signup.html')
+
+
+@app.route('/signup', methods=['POST'])
 def signup():
-    if request.method == 'POST':
-        username = request.form['username']
-        email = request.form['email']
-        password = request.form['password']
-        confirm_password = request.form['confirm_password']
+    username = request.form['username']
+    email = request.form['email']
+    password = request.form['password']
+    confirm_password = request.form['confirm_password']
 
-        if not all([username, email, password, confirm_password]):
-            return json.dumps({'error': 'All fields are required'})
+    # Basic validation
+    if not all([username, email, password, confirm_password]):
+        return json.dumps({'error': 'All fields are required'})
 
-        if len(password) < 6:
-            return json.dumps({'error': 'Password should be at least 6 characters long'})
+    if len(password) < 6:
+        return json.dumps({'error': 'Password should be at least 6 characters long'})
 
-        if not re.match(r"[^@]+@[^@]+\.[^@]+", email):
-            return json.dumps({'error': 'Invalid email format'})
+    if not re.match(r"[^@]+@[^@]+\.[^@]+", email):
+        return json.dumps({'error': 'Invalid email format'})
 
-        if password != confirm_password:
-            return json.dumps({'error': 'Passwords do not match'})
+    if password != confirm_password:
+        return json.dumps({'error': 'Passwords do not match'})
 
-        try:
-            existing_username = db.child('users').order_by_child('username').equal_to(username).get()
-            if existing_username.each():
-                return json.dumps({'error': 'Username is already taken'})
+    connection = get_db_connection()
+    if not connection:
+        return json.dumps({'error': 'Database connection failed'})
 
-            existing_email = db.child('users').order_by_child('email').equal_to(email).get()
-            if existing_email.each():
-                return json.dumps({'error': 'Email address is already taken'})
+    cursor = connection.cursor()
+    cursor.execute("SELECT * FROM users WHERE username = %s", (username,))
+    existing_user = cursor.fetchone()
+    if existing_user:
+        cursor.close()
+        connection.close()
+        return json.dumps({'error': 'Username is already taken'})
 
-            new_user = auth.create_user_with_email_and_password(email, password)
-            auth.send_email_verification(new_user['idToken'])
+    cursor.execute("INSERT INTO users (username, email, password) VALUES (%s, %s, %s)", (username, email, password))
+    connection.commit()
+    cursor.close()
+    connection.close()
 
-            user_data = {
-                'username': username,
-                'email': email,
-                'created_at': datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-            }
-            db.child('users').push(user_data)
-
-            return json.dumps({'message': 'Sign up successful'})
-        except Exception as e:
-            print("Error:", e)
-            return json.dumps({'error': 'An error occurred while signing up'})
-    else:
-        return render_template('login_signup.html')
+    return json.dumps({'message': 'Sign up successful'})
 
 
 @app.route('/dashboard')
 def dashboard():
     return render_template('dashboard.html')
+
+
+@app.route('/recommendations', methods=['GET'])
+def recommendations():
+    if 'user_id' not in session:
+        return render_template('dashboard.html', error='User not logged in.')
+
+    user_id = session['user_id']
+
+    connection = get_db_connection()
+    if not connection:
+        return render_template('dashboard.html', error='Database connection failed.')
+
+    try:
+        hybrid_recommendations, _, _ = get_hybrid_recommendations(user_id)
+
+        if not hybrid_recommendations:
+            return render_template('dashboard.html', error='No recommendations available.')
+
+        recommended_company_names = []
+        for company_id in hybrid_recommendations:
+            query = "SELECT company_name FROM companies WHERE company_id = %s"
+            cursor = connection.cursor()
+            cursor.execute(query, (int(company_id),))
+            result = cursor.fetchone()
+            cursor.close()
+            if result:
+                recommended_company_names.append(result[0])
+
+        return render_template('recommendations.html', recommendations=recommended_company_names)
+    except mysql.connector.Error as e:
+        return render_template('dashboard.html', error=f'Error reading data from MySQL: {e}')
+    finally:
+        connection.close()
 
 
 if __name__ == '__main__':

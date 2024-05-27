@@ -1,10 +1,59 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+	<title>Company Recommendation System</title>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	<style type="text/css">
+		h1 {
+			margin-top: 50px;
+			margin-bottom: 30px;
+			text-align: center;
+		}
+		input[type=text] {
+			width: 60%;
+			padding: 12px 20px;
+			margin: 8px 0;
+			box-sizing: border-box;
+			border: 2px solid #ccc;
+			border-radius: 4px;
+			font-size: 16px;
+			font-family: 'Raleway', sans-serif;
+		}
+		input[type=submit] {
+			background-color: #008CBA;
+			color: white;
+			font-size: 16px;
+			padding: 12px 20px;
+			border: none;
+			border-radius: 4px;
+			cursor: pointer;
+			font-family: 'Raleway', sans-serif;
+		}
+		.container {
+			margin-top: 30px;
+			margin-bottom: 50px;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+		}
+		.error {
+			color: red;
+			margin-top: 10px;
+			font-size: 16px;
+			font-family: 'Raleway', sans-serif;
+		}
+	</style>
 </head>
 <body>
-
+	<div class="container">
+		<h1>Company Recommendation System</h1>
+		<!-- Add a button/link to navigate to recommendations -->
+		<a href="/recommendations">
+			<button>Get Recommendations</button>
+		</a>
+		{% if error %}
+		<p class="error">{{ error }}</p>
+		{% endif %}
+	</div>
 </body>
 </html>
