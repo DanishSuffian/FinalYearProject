@@ -1,59 +1,230 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-	<title>Company Recommendation System</title>
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-	<style type="text/css">
-		h1 {
-			margin-top: 50px;
-			margin-bottom: 30px;
-			text-align: center;
-		}
-		input[type=text] {
-			width: 60%;
-			padding: 12px 20px;
-			margin: 8px 0;
-			box-sizing: border-box;
-			border: 2px solid #ccc;
-			border-radius: 4px;
-			font-size: 16px;
-			font-family: 'Raleway', sans-serif;
-		}
-		input[type=submit] {
-			background-color: #008CBA;
-			color: white;
-			font-size: 16px;
-			padding: 12px 20px;
-			border: none;
-			border-radius: 4px;
-			cursor: pointer;
-			font-family: 'Raleway', sans-serif;
-		}
-		.container {
-			margin-top: 30px;
-			margin-bottom: 50px;
-			display: flex;
-			flex-direction: column;
-			align-items: center;
-		}
-		.error {
-			color: red;
-			margin-top: 10px;
-			font-size: 16px;
-			font-family: 'Raleway', sans-serif;
-		}
-	</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/css/iziToast.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css"/>
+    <link rel="stylesheet" href="../static/swiper-bundle.min.css">
+    <link rel="stylesheet" href="../static/dashboard.css">
+    <title>Dashboard Page | IntelIntern</title>
 </head>
 <body>
-	<div class="container">
-		<h1>Company Recommendation System</h1>
-		<!-- Add a button/link to navigate to recommendations -->
-		<a href="/recommendations">
-			<button>Get Recommendations</button>
-		</a>
-		{% if error %}
-		<p class="error">{{ error }}</p>
-		{% endif %}
-	</div>
+	<header class="header" id="header">
+	    <nav class="nav container">
+            <a href="#" class="nav__logo">IntelIntern</a>
+
+            <div class="nav__menu">
+                <ul class="nav__list">
+                    <li class="nav__item">
+                        <a href="#" class="nav__link">
+                            <i class="ri-home-2-line"></i>
+                            <span>Home</span>
+                        </a>
+                    </li>
+
+                    <li class="nav__item">
+                        <a href="#" class="nav__link">
+                            <i class="ri-building-line"></i>
+                            <span>Companies</span>
+                        </a>
+                    </li>
+
+                    <li class="nav__item">
+                        <a href="#" class="nav__link">
+                            <i class="ri-account-circle-line"></i>
+                            <span>Account</span>
+                        </a>
+                    </li>
+
+                    <li class="nav__item">
+                        <a href="#" class="nav__link">
+                            <i class="ri-customer-service-line"></i>
+                            <span>Contact</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <i class="ri-moon-line change-theme" id="theme-button"></i>
+
+            <a href="{{ url_for('logout') }}" class="button nav__button">
+                Logout
+            </a>
+        </nav>
+	</header>
+    <main class="main">
+        <section class="home section" id="home">
+            <div class="home__container container grid">
+                <div class="home__data">
+                    <h1 class="home__title">
+                        Discover <br> Most Suitable <br> Company
+                    </h1>
+
+                    <p class="home__description">
+                        Find a variety of company that suit you very easily,
+                        forget all difficulties in finding an internship for you
+                    </p>
+
+                    <form action="" class="home__search">
+                        <i class="ri-search-line"></i>
+                        <input type="search" placeholder="Search..." class="home__search-input">
+                        <button class="button">Search</button>
+                    </form>
+
+                    <div class="home__value">
+                        <div>
+                            <h1 class="home__value-number"  id="user_count"></h1>
+                            <span class="home__value-description">
+                                Current <br> Users
+                            </span>
+                        </div>
+
+                        <div>
+                            <h1 class="home__value-number" id="company_count"></h1>
+                            <span class="home__value-description">
+                                Registered <br> Companies
+                            </span>
+                        </div>
+
+                        <div>
+                            <h1 class="home__value-number" id="review_count"></h1>
+                            <span class="home__value-description">
+                                Review <br> Counts
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="home__images">
+                    <div class="home__orbe"></div>
+
+                    <div class="home__img">
+                    <img src="../static/assets/dashboard.jpg" alt="">
+                </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="recommended section" id="recommended">
+            <div class="container">
+                <span class="section__subtitle">Best Company</span>
+                <h2 class="section__title">
+                    Recommended For You<span>.</span>
+                </h2>
+
+                <div class="recommended__container swiper">
+                    <div class="swiper-wrapper">
+                        {% for company in recommendations %}
+                            <article class="recommended__card swiper-slide">
+                                <img src="{{ company.company_image if company.company_image else url_for('static', filename='assets/default_logo.png') }}" alt="" class="recommended__img">
+
+                                <div class="recommended__data">
+                                    <h2 class="recommended__reviews">
+                                        <span>{{ company.review_count }}</span> Reviews
+                                    </h2>
+                                    <h3 class="recommended__title">
+                                        {{ company.company_name }}
+                                    </h3>
+                                    <p class="recommended__description">
+                                        <strong>Location:</strong> {{ company.company_location }}<br>
+                                        <strong>Scope:</strong> {{ company.company_scope }}<br>
+                                        <strong>Type:</strong> {{ company.company_type }}
+                                    </p>
+                                </div>
+                            </article>
+                        {% endfor %}
+                    </div>
+
+                    <div class="swiper-button-next">
+                        <i class="ri-arrow-right-s-line"></i>
+                    </div>
+                    <div class="swiper-button-prev">
+                        <i class="ri-arrow-left-s-line"></i>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="recommended section" id="recommended2">
+            <div class="container">
+                <span class="section__subtitle">Best Company</span>
+                <h2 class="section__title">
+                    Recommended For You<span>.</span>
+                </h2>
+
+                <div class=" swiper recommended__container">
+                    <div class="swiper-wrapper">
+                        {% for company in recommendations %}
+                        <div class="swiper-slide">
+                            <article class="recommended__card">
+                                <img src="{{ company.company_image if company.company_image else url_for('static', filename='assets/default_logo.png') }}" alt="" class="recommended__img">
+
+                                <div class="recommended__data">
+                                    <h2 class="recommended__reviews">
+                                        <span>{{ company.review_count }}</span> Reviews
+                                    </h2>
+                                    <h3 class="recommended__title">
+                                        {{ company.company_name }}
+                                    </h3>
+                                    <p class="recommended__description">
+                                        {{ company.company_location }} - {{ company.company_scope }} - {{ company.company_type }}
+                                    </p>
+                                </div>
+                            </article>
+                        </div>
+                        {% endfor %}
+                    </div>
+
+                    <div class="swiper-button-next">
+                        <i class="ri-arrow-right-s-line"></i>
+                    </div>
+                    <div class="swiper-button-prev">
+                        <i class="ri-arrow-left-s-line"></i>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    <footer class="footer section">
+        <div class="section__container footer__container">
+            <div class="footer__col">
+                <div class="logo footer__logo">
+                    <a href="/">IntelIntern</a>
+                </div>
+                <p>
+                    Embark on your internship journey & discover new opportunities!
+                </p>
+            </div>
+            <div class="footer__col">
+                <h4>More on IntelIntern</h4>
+                <ul class="footer__links">
+                    <li><a href="#">About IntelIntern</a></li>
+                    <li><a href="#">Developer</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                </ul>
+            </div>
+            <div class="footer__col">
+                <h4>More on Glassdoor</h4>
+                <ul class="footer__links">
+                    <li><a href="https://www.glassdoor.com/Community/index.htm">Community</a></li>
+                    <li><a href="https://www.glassdoor.com/Job/index.htm">Jobs</a></li>
+                    <li><a href="https://www.glassdoor.com/Reviews/index.htm">Companies</a></li>
+                    <li><a href="https://www.glassdoor.com/Salaries/index.htm">Salaries</a></li>
+                    <li><a href="https://www.glassdoor.com/employers/?source=gdemployermenu">For Employers</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer__bar">
+            Copyright © 2024 IntelIntern. All rights reserved.
+        </div>
+    </footer>
+    <a href="#" class="scrollup" id="scroll-up">
+        <i class="ri-arrow-up-double-line"></i>
+    </a>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/js/iziToast.min.js"></script>
+    <script src="../static/scripts/swiper-bundle.min.js"></script>
+    <script src="../static/scripts/dashboard.js"></script>
 </body>
 </html>

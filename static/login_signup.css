@@ -66,6 +66,10 @@ input {
     color: var(--white);
 }
 
+.logo__container a:hover {
+    color: var(--secondary-color);
+}
+
 .forms__container {
     position: absolute;
     top: 0;
@@ -335,6 +339,10 @@ form.signup__form {
 
 .footer__logo {
     margin-bottom: 1rem;
+}
+
+.footer__logo a:hover {
+    color: var(--secondary-color);
 }
 
 .footer__col p {

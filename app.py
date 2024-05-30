@@ -41,7 +41,6 @@ def get_db_connection():
         return None
 
 
-# Function to preprocess text
 def preprocess_text(text):
     doc = nlp(text)
     processed_text = []
@@ -215,7 +214,82 @@ def signup():
 
 @app.route('/dashboard')
 def dashboard():
-    return render_template('dashboard.html')
+    if 'user_id' not in session:
+        return render_template('login_signup.html', error='User not logged in.')
+
+    user_id = session['user_id']
+    connection = get_db_connection()
+    if not connection:
+        return render_template('dashboard.html', error='Database connection failed.')
+
+    try:
+        hybrid_recommendations, _, _ = get_hybrid_recommendations(user_id)
+
+        if not hybrid_recommendations:
+            return render_template('dashboard.html', error='No recommendations available.')
+
+        recommended_companies = []
+        cursor = connection.cursor(dictionary=True)
+        for company_id in hybrid_recommendations:
+            cursor.execute("""
+                SELECT 
+                    c.company_id,
+                    c.company_name,
+                    c.company_location,
+                    c.company_type,
+                    c.company_scope,
+                    c.company_image,
+                    (SELECT COUNT(*) FROM interactions WHERE company_id = c.company_id) AS review_count
+                FROM 
+                    companies c 
+                WHERE
+                    c.company_id = %s
+            """, (int(company_id),))
+            result = cursor.fetchone()
+            if result:
+                recommended_companies.append(result)
+        cursor.close()
+
+        return render_template('dashboard.html', recommendations=recommended_companies)
+    except mysql.connector.Error as e:
+        return render_template('dashboard.html', error=f'Error reading data from MySQL: {e}')
+    finally:
+        connection.close()
+
+
+@app.route('/get_counts', methods=['GET'])
+def get_counts():
+    connection = get_db_connection()
+    if connection:
+        try:
+            cursor = connection.cursor()
+            cursor.execute("SELECT COUNT(*) FROM users")
+            user_count = cursor.fetchone()[0]
+
+            cursor.execute("SELECT COUNT(*) FROM companies")
+            company_count = cursor.fetchone()[0]
+
+            cursor.execute("SELECT COUNT(*) FROM interactions WHERE pros IS NOT NULL AND cons IS NOT NULL")
+            review_count = cursor.fetchone()[0]
+
+            return jsonify({
+                'user_count': user_count,
+                'company_count': company_count,
+                'review_count': review_count
+            })
+        except mysql.connector.Error as e:
+            print(f"Error reading data from MySQL: {e}")
+            return json.dumps({'error': str(e)}), 500
+        finally:
+            connection.close()
+    else:
+        return json.dumps({'error': 'Failed to connect to the database'}), 500
+
+
+@app.route('/logout')
+def logout():
+    session.clear()
+    return render_template('login_signup.html')
 
 
 @app.route('/recommendations', methods=['GET'])

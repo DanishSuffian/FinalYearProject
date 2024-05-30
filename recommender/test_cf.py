@@ -46,7 +46,6 @@ if connection:
 # Apply normalization to the sentiment_score column
 # df['sentiment_score'] = df['sentiment_score'].apply(normalize_sentiment)
 
-
 # Define a reader with the rating scale range. Adjusted to match the dataset's scale
 reader = Reader(rating_scale=(1, 5))
 

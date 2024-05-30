@@ -7,7 +7,6 @@ import pandas as pd
 import mysql.connector
 from surprise import Dataset, Reader, SVD
 from surprise.model_selection import train_test_split
-import matplotlib.pyplot as plt
 
 # Global relevance threshold
 RELEVANCE_THRESHOLD = 2
@@ -17,11 +16,14 @@ nlp = spacy.load("en_core_web_sm")
 stop_words = spacy.lang.en.stop_words.STOP_WORDS
 punctuation = string.punctuation
 
+
 # Preprocess text function
 def preprocess_text(text):
     doc = nlp(text)
-    processed_text = [token.text.lower() for token in doc if token.pos_ != "STOP" and token.text.lower() not in stop_words and token.text.lower() not in punctuation]
+    processed_text = [token.text.lower() for token in doc if
+                      token.pos_ != "STOP" and token.text.lower() not in stop_words and token.text.lower() not in punctuation]
     return " ".join(processed_text)
+
 
 # Database configuration
 db_config = {
@@ -32,6 +34,7 @@ db_config = {
     'port': 3306
 }
 
+
 # Get database connection
 def get_db_connection():
     try:
@@ -41,6 +44,7 @@ def get_db_connection():
     except mysql.connector.Error as e:
         print(f"Error: {e}")
         return None
+
 
 # Fetch data
 connection = get_db_connection()
@@ -58,7 +62,8 @@ if connection:
         connection.close()
 
 # Preprocess company data for CBF
-companies['content'] = companies['company_name'] + ' ' + companies['company_location'] + ' ' + companies['company_type'] + ' ' + companies['company_scope']
+companies['content'] = companies['company_name'] + ' ' + companies['company_location'] + ' ' + companies[
+    'company_type'] + ' ' + companies['company_scope']
 companies['content'] = companies['content'].fillna('')
 companies['content'] = companies['content'].apply(preprocess_text)
 
@@ -68,6 +73,7 @@ tfidf_matrix = tfidf_vectorizer.fit_transform(companies['content'])
 svd = TruncatedSVD(n_components=10)
 tfidf_svd = svd.fit_transform(tfidf_matrix)
 
+
 # Normalize sentiment scores for CF
 def normalize_sentiment(score):
     x_min = -2
@@ -75,6 +81,7 @@ def normalize_sentiment(score):
     y_min = 1
     y_max = 5
     return ((score - x_min) / (x_max - x_min)) * (y_max - y_min) + y_min
+
 
 interactions['sentiment_score'] = interactions['sentiment_score'].apply(normalize_sentiment)
 
@@ -87,6 +94,7 @@ algo.fit(trainset)
 
 features_to_match = ['company_location', 'company_scope', 'company_type']
 
+
 # Hybrid recommendation function
 def get_hybrid_recommendations(user_id, num_recommendations=10):
     user_interactions = interactions[interactions['user_id'] == user_id]
@@ -98,7 +106,8 @@ def get_hybrid_recommendations(user_id, num_recommendations=10):
     company_vector = tfidf_svd[company_index].reshape(1, -1)
     similarity_scores = cosine_similarity(company_vector, tfidf_svd)[0]
 
-    cbf_recommendations = sorted(list(enumerate(similarity_scores)), key=lambda x: x[1], reverse=True)[1:num_recommendations+1]
+    cbf_recommendations = sorted(list(enumerate(similarity_scores)), key=lambda x: x[1], reverse=True)[
+                          1:num_recommendations + 1]
     cbf_recommendations = [(companies.iloc[i[0]]['company_id'], i[1]) for i in cbf_recommendations]
 
     all_company_ids = companies['company_id'].tolist()
@@ -111,25 +120,36 @@ def get_hybrid_recommendations(user_id, num_recommendations=10):
     min_cbf_score = min(cbf_recommendations, key=lambda x: x[1])[1]
     min_cf_score = min(cf_recommendations, key=lambda x: x[1])[1]
 
-    cbf_recommendations = [(company_id, (score - min_cbf_score) / (max_cbf_score - min_cbf_score)) for company_id, score in cbf_recommendations]
-    cf_recommendations = [(company_id, (score - min_cf_score) / (max_cf_score - min_cf_score)) for company_id, score in cf_recommendations]
+    cbf_recommendations = [(company_id, (score - min_cbf_score) / (max_cbf_score - min_cbf_score)) for company_id, score
+                           in cbf_recommendations]
+    cf_recommendations = [(company_id, (score - min_cf_score) / (max_cf_score - min_cf_score)) for company_id, score in
+                          cf_recommendations]
 
     # Combine recommendations with weights
     weighted_hybrid_recommendations = {}
     for company_id, cbf_score in cbf_recommendations:
-        weighted_hybrid_recommendations[company_id] = weighted_hybrid_recommendations.get(company_id, 0) + 0.7 * cbf_score
+        weighted_hybrid_recommendations[company_id] = weighted_hybrid_recommendations.get(company_id,
+                                                                                          0) + 0.7 * cbf_score
 
     for company_id, cf_score in cf_recommendations:
-        weighted_hybrid_recommendations[company_id] = weighted_hybrid_recommendations.get(company_id, 0) + 0.3 * cf_score
+        weighted_hybrid_recommendations[company_id] = weighted_hybrid_recommendations.get(company_id,
+                                                                                          0) + 0.3 * cf_score
 
     # Sort the combined recommendations based on weights and remove duplicates
     weighted_hybrid_recommendations = sorted(weighted_hybrid_recommendations.items(), key=lambda x: x[1], reverse=True)
     weighted_hybrid_recommendations = [rec[0] for rec in weighted_hybrid_recommendations]
 
     # Evaluate relevance based on feature matching
-    relevance_percentage, relevant_items, non_relevant_items = evaluate_relevance(user_interactions, weighted_hybrid_recommendations[:num_recommendations], features_to_match, RELEVANCE_THRESHOLD)
+    relevance_percentage, relevant_items, non_relevant_items = evaluate_relevance(user_interactions,
+                                                                                  weighted_hybrid_recommendations[
+                                                                                  :num_recommendations],
+                                                                                  features_to_match,
+                                                                                  RELEVANCE_THRESHOLD)
 
-    return weighted_hybrid_recommendations[:num_recommendations], cbf_recommendations[:num_recommendations], cf_recommendations[:num_recommendations], relevance_percentage, relevant_items, non_relevant_items
+    return weighted_hybrid_recommendations[:num_recommendations], cbf_recommendations[
+                                                                  :num_recommendations], cf_recommendations[
+                                                                                         :num_recommendations], relevance_percentage, relevant_items, non_relevant_items
+
 
 # Define function to evaluate relevance based on feature matching
 def evaluate_relevance(user_interactions, recommendations, features, relevance_threshold=RELEVANCE_THRESHOLD):
@@ -163,19 +183,22 @@ def evaluate_relevance(user_interactions, recommendations, features, relevance_t
 
     return total_relevant / total_recommendations if total_recommendations > 0 else 0, relevant_items, non_relevant_items
 
+
 # Calculate precision, recall, and F1-score for a user
 def calculate_precision_recall_f1(user_id, num_recommendations=10):
     _, _, _, _, relevant_items, non_relevant_items = get_hybrid_recommendations(user_id, num_recommendations)
 
     tp = len(relevant_items)
     fp = len(non_relevant_items)
-    fn = interactions[(interactions['user_id'] == user_id) & (~interactions['company_id'].isin(relevant_items))].shape[0]
+    fn = interactions[(interactions['user_id'] == user_id) & (~interactions['company_id'].isin(relevant_items))].shape[
+        0]
 
     precision = tp / (tp + fp) if (tp + fp) > 0 else 0
     recall = tp / (tp + fn) if (tp + fn) > 0 else 0
     f1 = 2 * (precision * recall) / (precision + recall) if (precision + recall) > 0 else 0
 
     return precision, recall, f1
+
 
 # Calculate average precision, recall, and F1-score for the test set
 def calculate_average_metrics(testset, num_recommendations=10):
@@ -198,6 +221,7 @@ def calculate_average_metrics(testset, num_recommendations=10):
 
     return avg_precision, avg_recall, avg_f1
 
+
 # Example usage:
 precision, recall, f1 = calculate_precision_recall_f1(1)
 print(f"Precision: {precision:.2f}, Recall: {recall:.2f}, F1-score: {f1:.2f}")
@@ -207,22 +231,3 @@ avg_precision, avg_recall, avg_f1 = calculate_average_metrics(testset)
 print(f"\nAverage Precision on the test set: {avg_precision:.2f}")
 print(f"Average Recall on the test set: {avg_recall:.2f}")
 print(f"Average F1-score on the test set: {avg_f1:.2f}")
-
-# Calculate mean average precision for the test set
-def calculate_mean_average_precision(testset, num_recommendations=10):
-    user_ids = set([interaction[0] for interaction in testset])
-    total_precision = 0
-    count = 0
-
-    for user_id in user_ids:
-        precision, _, _ = calculate_precision_recall_f1(user_id, num_recommendations)
-        total_precision += precision
-        count += 1
-
-    mean_average_precision = total_precision / count if count > 0 else 0
-
-    return mean_average_precision
-
-# Example usage:
-mean_average_precision = calculate_mean_average_precision(testset)
-print(f"Mean Average Precision on the test set: {mean_average_precision:.2f}")

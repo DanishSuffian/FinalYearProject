@@ -89,6 +89,10 @@
     color: var(--white);
 }
 
+.logo a:hover {
+    color: var(--secondary-color);
+}
+
 img {
     display: flex;
     width: 100%;
@@ -333,6 +337,10 @@ nav {
 
 .footer__logo {
     margin-bottom: 1rem;
+}
+
+.footer__logo a:hover {
+    color: var(--secondary-color);
 }
 
 .footer__col p {

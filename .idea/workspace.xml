@@ -4,16 +4,19 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4d256f68-1943-435d-8a3e-960eb8036f02" name="Changes" comment="Ninth Commit - Connected the pages with Firebase by Google. A few errors encountered as I just understand how Flask routes work. It plays an important role in the whole process of redirecting the data. Just a few more touch ups to finish the login and signup page which includes error handling.">
-      <change afterPath="$PROJECT_DIR$/templates/recommendations.html" afterDir="false" />
+    <list default="true" id="4d256f68-1943-435d-8a3e-960eb8036f02" name="Changes" comment="Twelfth Commit - Structural changes and database migration. Initially, I was using a NoSQL Firebase database but encountered challenges in making it work effectively. Due to these difficulties, I switched to MySQL using phpMyAdmin. The new database setup is working well and I successfully used queries to generate recommendations. Additionally, I redefined some aspects of the recommender model and integrated it with the Flask app.py. The recommendations are now being generated correctly. I also made some changes to how I evaluate the recommendations.">
+      <change afterPath="$PROJECT_DIR$/static/assets/dashboard.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/assets/default_logo.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/dashboard.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/scripts/dashboard.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/scripts/swiper-bundle.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/swiper-bundle.min.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/recommender/cf_model.pkl" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/recommender/item_similarity_score.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/recommender/similarity_score.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/recommender/test_cbf.py" beforeDir="false" afterPath="$PROJECT_DIR$/recommender/test_cbf.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/recommender/test_cf.py" beforeDir="false" afterPath="$PROJECT_DIR$/recommender/test_cf.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/recommender/test_hybrid.py" beforeDir="false" afterPath="$PROJECT_DIR$/recommender/test_hybrid.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/landing.css" beforeDir="false" afterPath="$PROJECT_DIR$/static/landing.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/login_signup.css" beforeDir="false" afterPath="$PROJECT_DIR$/static/login_signup.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/dashboard.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/dashboard.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -87,22 +90,23 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "git-widget-placeholder": "master",
-    "last_opened_file_path": "C:/Users/ASUS/PycharmProjects/FinalYearProject/credentials",
+    "last_opened_file_path": "C:/Users/ASUS/PycharmProjects/FinalYearProject/static/assets",
     "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable"
   }
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\ASUS\PycharmProjects\FinalYearProject\static\assets" />
       <recent name="C:\Users\ASUS\PycharmProjects\FinalYearProject\credentials" />
       <recent name="C:\Users\ASUS\PycharmProjects\FinalYearProject\assets" />
       <recent name="C:\Users\ASUS\PycharmProjects\FinalYearProject\.venv" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\ASUS\PycharmProjects\FinalYearProject\static\assets" />
       <recent name="C:\Users\LENOVO\FinalYearProject\static\assets" />
       <recent name="C:\Users\LENOVO\FinalYearProject\static\scripts" />
       <recent name="C:\Users\LENOVO\FinalYearProject\static" />
       <recent name="C:\Users\LENOVO\FinalYearProject\templates" />
-      <recent name="C:\Users\LENOVO\FinalYearProject\credentials" />
     </key>
   </component>
   <component name="SharedIndexes">
@@ -188,7 +192,15 @@
       <option name="project" value="LOCAL" />
       <updated>1712054838336</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="Twelfth Commit - Structural changes and database migration. Initially, I was using a NoSQL Firebase database but encountered challenges in making it work effectively. Due to these difficulties, I switched to MySQL using phpMyAdmin. The new database setup is working well and I successfully used queries to generate recommendations. Additionally, I redefined some aspects of the recommender model and integrated it with the Flask app.py. The recommendations are now being generated correctly. I also made some changes to how I evaluate the recommendations.">
+      <option name="closed" value="true" />
+      <created>1716844596416</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1716844596416</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -211,6 +223,7 @@
     <MESSAGE value="Fifth Commit - Started designing user interface of the system using Flask. Had to change from using Django as it is only usable for Pycharm Professional." />
     <MESSAGE value="Seventh Commit - Continued with the design of the landing page." />
     <MESSAGE value="Ninth Commit - Connected the pages with Firebase by Google. A few errors encountered as I just understand how Flask routes work. It plays an important role in the whole process of redirecting the data. Just a few more touch ups to finish the login and signup page which includes error handling." />
-    <option name="LAST_COMMIT_MESSAGE" value="Ninth Commit - Connected the pages with Firebase by Google. A few errors encountered as I just understand how Flask routes work. It plays an important role in the whole process of redirecting the data. Just a few more touch ups to finish the login and signup page which includes error handling." />
+    <MESSAGE value="Twelfth Commit - Structural changes and database migration. Initially, I was using a NoSQL Firebase database but encountered challenges in making it work effectively. Due to these difficulties, I switched to MySQL using phpMyAdmin. The new database setup is working well and I successfully used queries to generate recommendations. Additionally, I redefined some aspects of the recommender model and integrated it with the Flask app.py. The recommendations are now being generated correctly. I also made some changes to how I evaluate the recommendations." />
+    <option name="LAST_COMMIT_MESSAGE" value="Twelfth Commit - Structural changes and database migration. Initially, I was using a NoSQL Firebase database but encountered challenges in making it work effectively. Due to these difficulties, I switched to MySQL using phpMyAdmin. The new database setup is working well and I successfully used queries to generate recommendations. Additionally, I redefined some aspects of the recommender model and integrated it with the Flask app.py. The recommendations are now being generated correctly. I also made some changes to how I evaluate the recommendations." />
   </component>
 </project>
