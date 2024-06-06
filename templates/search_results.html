@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Results | IntelIntern</title>
+    <link rel="stylesheet" href="../static/search.css"> <!-- Link to your main stylesheet -->
+</head>
+<body>
+    <header class="header" id="header">
+        <!-- Your header here -->
+    </header>
+    <main class="main">
+        <section class="section search-results">
+            <div class="container">
+                <h2 class="section__title">Search Results</h2>
+                <div class="results__container">
+                    {% if companies %}
+                        <ul class="results-list">
+                            {% for company in companies %}
+                                <li class="result__item">
+                                    <img src="{{ company.company_image if company.company_image else url_for('static', filename='assets/default_logo.png') }}">
+                                    <h3>{{ company.company_name }}</h3>
+                                    <p>Location: {{ company.company_location }}</p>
+                                    <p>Industry: {{ company.company_scope }}</p>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    {% else %}
+                        <p class="no-results">No results found for '{{ request.args.get('query') }}'</p>
+                    {% endif %}
+                </div>
+            </div>
+        </section>
+    </main>
+    <footer class="footer">
+        <!-- Your footer here -->
+    </footer>
+</body>
+</html>

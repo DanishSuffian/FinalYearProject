@@ -37,6 +37,42 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
+document.addEventListener('DOMContentLoaded', function() {
+    const searchInput = document.getElementById('searchInput');
+    const autocompleteDropdown = document.getElementById('autocompleteDropdown');
+
+    searchInput.addEventListener('input', function() {
+        const query = this.value.trim();
+        if (query === '') {
+            autocompleteDropdown.innerHTML = ''; // Clear dropdown when input is empty
+            return;
+        }
+
+        fetch(`/autocomplete-options?query=${query}`)
+            .then(response => response.json())
+            .then(data => {
+                if (data.length > 0) {
+                    const dropdownContent = data.map(option => `<div class="autocomplete-option">${option}</div>`).join('');
+                    autocompleteDropdown.innerHTML = dropdownContent;
+                } else {
+                    autocompleteDropdown.innerHTML = ''; // Clear dropdown if no options found
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching autocomplete options:', error);
+            });
+    });
+
+    // Handle click on autocomplete option
+    autocompleteDropdown.addEventListener('click', function(event) {
+        const clickedOption = event.target.closest('.autocomplete-option');
+        if (clickedOption) {
+            searchInput.value = clickedOption.textContent.trim();
+            autocompleteDropdown.innerHTML = ''; // Clear dropdown after selection
+        }
+    });
+});
+
 function scrollHeader(){
     const header = document.getElementById('header');
     if (window.scrollY >= 50) {
@@ -50,9 +86,10 @@ window.addEventListener('scroll', scrollHeader);
 var swiperRecommended = new Swiper(".recommended__container", {
     spaceBetween: 32,
     grabCursor: true,
-    centeredSlides: true,
+    centeredSlides: false,
     slidesPerView: 'auto',
-    loop: true,
+    loop: false,
+    initialSlide: 0,
 
     navigation: {
         nextEl: ".swiper-button-next",

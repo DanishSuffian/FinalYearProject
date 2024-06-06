@@ -77,6 +77,16 @@ tfidf_matrix = tfidf_vectorizer.fit_transform(companies['content'])
 svd = TruncatedSVD(n_components=10)
 tfidf_svd = svd.fit_transform(tfidf_matrix)
 
+# Calculate the popularity of items based on Bayesian average scores
+item_stats = interactions.groupby('company_id')['rating'].agg(['count', 'mean'])
+C = item_stats['count'].mean()
+m = item_stats['mean'].mean()
+
+
+def bayesian_avg(ratings):
+    bayesian_avg = (C * m + ratings.sum()) / (C + ratings.count())
+    return round(bayesian_avg, 3)
+
 
 def normalize_sentiment(score):
     x_min = -2
@@ -105,7 +115,12 @@ features_to_match = ['company_location', 'company_scope', 'company_type']
 def get_hybrid_recommendations(user_id, num_recommendations=10):
     user_interactions = interactions[interactions['user_id'] == user_id]
     if user_interactions.empty:
-        return [], [], [], 0, [], []
+        bayesian_avg_ratings = interactions.groupby('company_id')['rating'].agg(bayesian_avg).reset_index()
+        bayesian_avg_ratings.columns = ['company_id', 'bayesian_avg']
+        bayesian_avg_ratings = bayesian_avg_ratings.merge(companies[['company_id', 'company_name']], on='company_id')
+        top_recommendations = bayesian_avg_ratings.sort_values(by='bayesian_avg', ascending=False).head(
+            num_recommendations)
+        return list(top_recommendations['company_id']), list(top_recommendations['bayesian_avg']), []
 
     last_company_id = user_interactions['company_id'].iloc[-1]
     company_index = companies[companies['company_id'] == last_company_id].index[0]
@@ -239,6 +254,7 @@ def dashboard():
                     c.company_type,
                     c.company_scope,
                     c.company_image,
+                    c.company_link,
                     (SELECT COUNT(*) FROM interactions WHERE company_id = c.company_id) AS review_count
                 FROM 
                     companies c 
@@ -286,44 +302,45 @@ def get_counts():
         return json.dumps({'error': 'Failed to connect to the database'}), 500
 
 
+@app.route('/search')
+def search():
+    query = request.args.get('query')
+    connection = get_db_connection()
+    if not connection:
+        return render_template('search_results.html', companies=[])
+
+    cursor = connection.cursor(dictionary=True)
+    try:
+        cursor.execute("""
+            SELECT * FROM companies WHERE MATCH(company_name, company_location, company_type, company_scope) AGAINST(%s);
+
+        """, (query,))
+        companies = cursor.fetchall()
+    finally:
+        cursor.close()
+        connection.close()
+
+    return render_template('search_results.html', companies=companies)
+
+
+@app.route('/autocomplete-options')
+def autocomplete_options():
+    query = request.args.get('query')
+    if not query:
+        return jsonify([])
+
+    autocomplete_options = []
+    for column in ['company_name', 'company_location', 'company_type', 'company_scope']:
+        autocomplete_options.extend(companies[column].str.lower().unique().tolist())
+
+    matched_options = [option for option in autocomplete_options if query.lower() in option]
+    return jsonify(matched_options[:10])  # Limit to 10 autocomplete options
+
+
 @app.route('/logout')
 def logout():
     session.clear()
     return render_template('login_signup.html')
-
-
-@app.route('/recommendations', methods=['GET'])
-def recommendations():
-    if 'user_id' not in session:
-        return render_template('dashboard.html', error='User not logged in.')
-
-    user_id = session['user_id']
-
-    connection = get_db_connection()
-    if not connection:
-        return render_template('dashboard.html', error='Database connection failed.')
-
-    try:
-        hybrid_recommendations, _, _ = get_hybrid_recommendations(user_id)
-
-        if not hybrid_recommendations:
-            return render_template('dashboard.html', error='No recommendations available.')
-
-        recommended_company_names = []
-        for company_id in hybrid_recommendations:
-            query = "SELECT company_name FROM companies WHERE company_id = %s"
-            cursor = connection.cursor()
-            cursor.execute(query, (int(company_id),))
-            result = cursor.fetchone()
-            cursor.close()
-            if result:
-                recommended_company_names.append(result[0])
-
-        return render_template('recommendations.html', recommendations=recommended_company_names)
-    except mysql.connector.Error as e:
-        return render_template('dashboard.html', error=f'Error reading data from MySQL: {e}')
-    finally:
-        connection.close()
 
 
 if __name__ == '__main__':

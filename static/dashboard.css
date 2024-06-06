@@ -223,6 +223,7 @@ body.dark-theme {
 
 
 .home__search {
+    position: relative;
     background-color: var(--body-color);
     padding: .35rem .35rem .35rem .75rem;
     display: flex;
@@ -248,6 +249,37 @@ body.dark-theme {
     color: var(--text-color-light);
 }
 
+.autocomplete-dropdown {
+    position: absolute;
+    top: 100%; /* Aligns the dropdown right below the search bar */
+    left: 0;
+    right: 0;
+    border: 1px solid var(--text-color-light);
+    border-top: none;
+    background-color: var(--body-color);
+    z-index: 1000;
+    max-height: 200px; /* Limit the max height */
+    overflow-y: auto; /* Add a scrollbar if the content overflows */
+    border-radius: 0 0 .75rem .75rem;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.autocomplete-option {
+    padding: .5rem;
+    cursor: pointer;
+    border-bottom: 1px solid var(--text-color-light);
+    color: var(--text-color);
+    background-color: var(--body-color);
+}
+
+.autocomplete-option:last-child {
+    border-bottom: none;
+}
+
+.autocomplete-option:hover {
+    background-color: var(--container-color);
+    color: var(--first-color);
+}
 .home__value {
     display: flex;
     column-gap: 2.5rem;
@@ -330,6 +362,8 @@ body.dark-theme {
     background-color: var(--container-color);
     padding: .5rem .5rem 1.5rem;
     border-radius: 1rem;
+    border: 1px solid black;
+    border-color: #000;
     margin: 0 auto;
     transition: .4s;
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
@@ -373,7 +407,7 @@ body.dark-theme {
 }
 
 .recommended__card:hover {
-    box-shadow: 0 12px 16px hsla(42, 72%, 61%, .25);
+    box-shadow: 0 12px 16px hsla(42, 100%, 50%, .25);
 }
 
 .swiper-button-next::after,

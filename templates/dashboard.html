@@ -66,9 +66,10 @@
                         forget all difficulties in finding an internship for you
                     </p>
 
-                    <form action="" class="home__search">
+                    <form action="/search" class="home__search">
                         <i class="ri-search-line"></i>
-                        <input type="search" placeholder="Search..." class="home__search-input">
+                        <input type="search" name="query" id="searchInput" placeholder="Search..." class="home__search-input" autocomplete="off">
+                        <div class="autocomplete-dropdown" id="autocompleteDropdown"></div>
                         <button class="button">Search</button>
                     </form>
 
@@ -116,7 +117,7 @@
                 <div class="recommended__container swiper">
                     <div class="swiper-wrapper">
                         {% for company in recommendations %}
-                            <article class="recommended__card swiper-slide">
+                            <article class="recommended__card swiper-slide" onclick="window.open('{{ company.company_link }}', '_blank');">
                                 <img src="{{ company.company_image if company.company_image else url_for('static', filename='assets/default_logo.png') }}" alt="" class="recommended__img">
 
                                 <div class="recommended__data">
@@ -133,46 +134,6 @@
                                     </p>
                                 </div>
                             </article>
-                        {% endfor %}
-                    </div>
-
-                    <div class="swiper-button-next">
-                        <i class="ri-arrow-right-s-line"></i>
-                    </div>
-                    <div class="swiper-button-prev">
-                        <i class="ri-arrow-left-s-line"></i>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section class="recommended section" id="recommended2">
-            <div class="container">
-                <span class="section__subtitle">Best Company</span>
-                <h2 class="section__title">
-                    Recommended For You<span>.</span>
-                </h2>
-
-                <div class=" swiper recommended__container">
-                    <div class="swiper-wrapper">
-                        {% for company in recommendations %}
-                        <div class="swiper-slide">
-                            <article class="recommended__card">
-                                <img src="{{ company.company_image if company.company_image else url_for('static', filename='assets/default_logo.png') }}" alt="" class="recommended__img">
-
-                                <div class="recommended__data">
-                                    <h2 class="recommended__reviews">
-                                        <span>{{ company.review_count }}</span> Reviews
-                                    </h2>
-                                    <h3 class="recommended__title">
-                                        {{ company.company_name }}
-                                    </h3>
-                                    <p class="recommended__description">
-                                        {{ company.company_location }} - {{ company.company_scope }} - {{ company.company_type }}
-                                    </p>
-                                </div>
-                            </article>
-                        </div>
                         {% endfor %}
                     </div>
 
