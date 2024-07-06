@@ -20,3 +20,14 @@ login__btn.addEventListener("click", () => {
     container.classList.remove("signup__mode");
     clearInputFields(signup_form);
 });
+
+document.addEventListener('DOMContentLoaded', function() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const showSignup = urlParams.get('showSignup');
+
+    if (showSignup === "true") {
+        container.classList.add("signup__mode");
+        clearInputFields(login_form);
+    }
+});
+

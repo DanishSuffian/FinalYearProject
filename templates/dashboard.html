@@ -16,31 +16,37 @@
 
             <div class="nav__menu">
                 <ul class="nav__list">
+
                     <li class="nav__item">
-                        <a href="#" class="nav__link">
+                        <a href="/dashboard" id="nav_dashboard" class="nav__link">
                             <i class="ri-home-2-line"></i>
-                            <span>Home</span>
+                            <span>Dashboard</span>
                         </a>
                     </li>
 
                     <li class="nav__item">
-                        <a href="#" class="nav__link">
+                        <a onclick="window.open('https://www.glassdoor.com/Reviews/index.htm', '_blank');" id="nav_companies" class="nav__link">
                             <i class="ri-building-line"></i>
                             <span>Companies</span>
                         </a>
                     </li>
 
                     <li class="nav__item">
-                        <a href="#" class="nav__link">
-                            <i class="ri-account-circle-line"></i>
-                            <span>Account</span>
+                        <a href="/saved" class="nav__link" id="nav_saved">
+                            <i class="ri-bookmark-line"></i>
+                            <span>Saved</span>
                         </a>
                     </li>
 
                     <li class="nav__item">
-                        <a href="#" class="nav__link">
-                            <i class="ri-customer-service-line"></i>
-                            <span>Contact</span>
+                        <a href="/account" class="nav__link" id="nav_account">
+                            <i class="ri-account-circle-line"></i>
+                            <span>Account</span>
+                        </a>
+                    </li>
+                    <li class="nav__item">
+                        <a href="/logout" class="nav__link" id="nav_logout">
+                            <i class="ri-logout-box-r-line"></i>
                         </a>
                     </li>
                 </ul>
@@ -151,7 +157,7 @@
         <div class="section__container footer__container">
             <div class="footer__col">
                 <div class="logo footer__logo">
-                    <a href="/">IntelIntern</a>
+                    <a href="#home">IntelIntern</a>
                 </div>
                 <p>
                     Embark on your internship journey & discover new opportunities!
@@ -184,6 +190,98 @@
     <a href="#" class="scrollup" id="scroll-up">
         <i class="ri-arrow-up-double-line"></i>
     </a>
+
+    <!---------------------------Preference Form--------------------------->
+    {% if show_multiform %}
+    <div class="popup">
+        <div class="multi-form-container">
+            <header>Preference Form</header>
+            <div class="progress-bar">
+                <div class="step">
+                    <p>Basic</p>
+                    <div class="bullet">
+                        <span>1</span>
+                    </div>
+                    <div class="check ri-check-line"></div>
+                </div>
+                <div class="step">
+                    <p>Work Environment</p>
+                    <div class="bullet">
+                        <span>2</span>
+                    </div>
+                    <div class="check ri-check-line"></div>
+                </div>
+                <div class="step">
+                    <p>Companies</p>
+                    <div class="bullet">
+                        <span>3</span>
+                    </div>
+                    <div class="check ri-check-line"></div>
+                </div>
+            </div>
+            <div class="form-outer">
+                <form action="/submit_interaction" method="POST" id="preferencesForm">
+                    <div class="page slidePage">
+                        <div class="title">Basic Preferences:</div>
+                        <div class="field">
+                            <div class="label">Location</div>
+                            <select name="location" id="location">
+                                <option value="" selected>--</option>
+                                {% for location in locations %}
+                                    <option value="{{ location }}">{{ location }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="field">
+                            <div class="label">Type</div>
+                            <select name="type" id="type">
+                                <option value="" selected>--</option>
+                                {% for type in types %}
+                                    <option value="{{ type }}">{{ type }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="field">
+                            <div class="label">Scope</div>
+                            <select name="scope" id="scope">
+                                <option value="" selected>--</option>
+                                {% for scope in scopes %}
+                                    <option value="{{ scope }}">{{ scope }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="field nextBtn">
+                            <button>Next</button>
+                        </div>
+                    </div>
+
+                    <div class="page">
+                        <div class="title">Describe Your Dream Company:</div>
+                        <div class="textfield">
+                            <div class="label">Description</div>
+                            <textarea id="company_description" placeholder="Describe the type of work environment you like."></textarea>
+                        </div>
+                        <div class="field btns">
+                            <button class="prev-1 prev">Previous</button>
+                            <button id="generateRec" class="next-1 next">Next</button>
+                        </div>
+                    </div>
+
+                    <div class="page">
+                        <div class="title">Get Closer to Your Dream Job:</div>
+                            <div id="recommendationsContainer">
+                            </div>
+                        <div class="field btns">
+                            <button class="prev-2 prev">Previous</button>
+                            <button class="submit next" type="submit" id="submitReview">Submit</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+    <!--------------------------------------------------------------------->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/js/iziToast.min.js"></script>
     <script src="../static/scripts/swiper-bundle.min.js"></script>
     <script src="../static/scripts/dashboard.js"></script>

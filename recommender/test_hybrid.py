@@ -129,11 +129,11 @@ def get_hybrid_recommendations(user_id, num_recommendations=10):
     weighted_hybrid_recommendations = {}
     for company_id, cbf_score in cbf_recommendations:
         weighted_hybrid_recommendations[company_id] = weighted_hybrid_recommendations.get(company_id,
-                                                                                          0) + 0.75 * cbf_score
+                                                                                          0) + 0.50 * cbf_score
 
     for company_id, cf_score in cf_recommendations:
         weighted_hybrid_recommendations[company_id] = weighted_hybrid_recommendations.get(company_id,
-                                                                                          0) + 0.25 * cf_score
+                                                                                          0) + 0.50 * cf_score
 
     # Sort the combined recommendations based on weights and remove duplicates
     weighted_hybrid_recommendations = sorted(weighted_hybrid_recommendations.items(), key=lambda x: x[1], reverse=True)

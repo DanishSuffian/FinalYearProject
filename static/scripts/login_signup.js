@@ -75,7 +75,7 @@ function displayPasswordStrength() {
         case 5:
             str.innerHTML = "very strong";
             pass.parentNode.style.borderColor = "#006400";
-            msg.style.color = "#006400"
+            msg.style.color = "#008200"
             break;
         default:
             str.innerHTML = "";
@@ -183,7 +183,7 @@ document.getElementById('signup_form').addEventListener('submit', function(event
                 titleClass: 'iziToast-title'
             });
         } else if (data.includes('Sign up successful')) {
-            sessionStorage.setItem('signupSuccessMessage', 'Please check your email to verify your account');
+            sessionStorage.setItem('signupSuccessMessage', 'Sign up successful');
             location.reload();
         } else {
             throw new Error('Unexpected response from server');
@@ -220,25 +220,18 @@ document.getElementById('login_form').addEventListener('submit', function(event)
                 messageClass: 'iziToast-message',
                 titleClass: 'iziToast-title'
             });
-        } else if (data.includes('Email is not verified')) {
+        } else if (data.includes('All fields are required')) {
             iziToast.error({
                 title: 'Error',
-                message: 'Email is not verified',
+                message: 'All fields are required',
                 position: 'topRight',
                 theme: 'bootstrap',
                 messageClass: 'iziToast-message',
                 titleClass: 'iziToast-title'
             });
         } else if (data.includes('Login successful')) {
+            sessionStorage.setItem('loginSuccessMessage', 'Login successful')
             window.location.href = '/dashboard';
-            iziToast.success({
-                title: 'Success',
-                message: 'Login successful',
-                position: 'topRight',
-                theme: 'bootstrap',
-                messageClass: 'iziToast-message',
-                titleClass: 'iziToast-title'
-            });
         } else {
             throw new Error('Unexpected response from server');
         }
@@ -251,8 +244,8 @@ document.getElementById('login_form').addEventListener('submit', function(event)
 document.addEventListener('DOMContentLoaded', function() {
     const verifyMessage = sessionStorage.getItem('signupSuccessMessage');
     if (verifyMessage) {
-        iziToast.info({
-            title: 'Info',
+        iziToast.success({
+            title: 'Success',
             message: verifyMessage,
             position: 'topRight',
             theme: 'bootstrap',

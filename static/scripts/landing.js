@@ -29,6 +29,11 @@ function redirectToLoginSignup() {
     window.location.href = '/signup';
 }
 
+function redirectToSignup() {
+    const url = '/signup?showSignup=true';
+    window.location.href = url;
+}
+
 const scrollRevealOption = {
     distance: "50px",
     origin: "bottom",
